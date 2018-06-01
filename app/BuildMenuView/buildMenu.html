@@ -1,0 +1,65 @@
+<ul class="menu">
+	<li>
+		<a href="#/home" ng-if="role === 'admin'">Build Menu</a>|
+	</li>
+	<li>
+		<a href="#/menu">Menu </a>|
+	</li>
+	<li>
+			<a href="" ng-click="logout()">Logout </a>|
+	</li>
+</ul>
+
+<div ng-show="hasError" class="alert alert-danger" role="alert">
+	Some required fields are missing. Dish name and Dish price are mandatory.
+</div>
+
+<div ng-show="saveSuccessful" class="alert alert-success" role="alert">
+	Saved successfully.
+</div>
+
+<form name="userForm" ng-submit="saveMenu(userForm.$valid)" novalidate>
+	<div class="pull-right">
+		<button type="submit" class="btn btn-primary">Save Menu</button>
+	</div>
+	<h1>Starter Dishes</h1>
+	<div class="row">
+		<div ng-repeat="dish in starterMenu" class="col-md-3">
+			<div class="card" ng-class="{ 'has-error' : (dish.dishName.$invalid && !dish.dishName.$pristine || dish.dishPrice.$invalid && !dish.dishPrice.$pristine) }">
+				<!-- <div *ngf-thumbnail="picFile" ngf-size="{width: 20, height: 20, quality: 0.9}" ngf-as-background="boolean"> -->
+				<img ng-src="{{dish.imagePreview}}" />
+				<div class="">
+					<button ngf-select="uploadFiles($files, dish, $index)" ng-model="picFile" accept="image/*">Select Picture</button>
+					<input class="form-control" name="dishName" placeholder="Dish Name" ng-model="dish.name" required="" type="text">
+					<input class="form-control" name="dishPrice" placeholder="Dish Price" ng-model="dish.price" required="" type="text">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card new-card" ng-click="addNewDish('starter')">
+				<i class="glyphicon glyphicon-plus "></i>
+			</div>
+		</div>
+	</div>
+
+	<hr>
+	<h1>Main Course Dishes</h1>
+	<div class="row">
+		<div ng-repeat="dish in mainCourseMenu" class="col-md-3">
+			<div class="card">
+				<!-- <div *ngf-thumbnail="picFile" ngf-size="{width: 20, height: 20, quality: 0.9}" ngf-as-background="boolean"> -->
+				<img ng-src="{{dish.imagePreview}}" />
+				<div class="">
+					<button ngf-select="uploadFiles($files, dish, $index)" ng-model="picFile" accept="image/*">Select Picture</button>
+					<input class="form-control" placeholder="Dish Name" ng-model="dish.name" required="" type="text">
+					<input class="form-control" placeholder="Dish Price" ng-model="dish.price" required="" type="text">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card new-card" ng-click="addNewDish('mainCourse')">
+				<i class="glyphicon glyphicon-plus "></i>
+			</div>
+		</div>
+	</div>
+</form>
